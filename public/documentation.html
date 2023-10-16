@@ -7,7 +7,8 @@
 </head>
 
 <body>
-    <div>
+
+    <div class="container">
         <h1>API Objective</h1>
         <p>
             The objective for this API is to a server-side component for a "movie" web application.
@@ -17,6 +18,166 @@
             Users will be able to sign up and update personal information, as well as creating a list of their favorite movies.
         </p>
     </div>
+
+    <div class="container">
+        <h2>Movie API Documentation</h2>
+    </div>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Business Logic</th>
+                    <th>URL</th>
+                    <th>HTTP Method</th>
+                    <th>Request body data format</th>
+                    <th>Response body data format</th>
+                </tr>
+            </thead>
+
+            <tbody style="background-color: lightgray; text-align: center;">
+                <tr style="height: 100px;">
+                    <td>Get a list of Movies</td>
+                    <td>/movies</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td>A JSON object holding data about all of the movies and their data</td>
+                </tr>
+
+
+                <tr>
+                    <td>Get data about a single movie by name.</td>
+                    <td>/movies/:Title</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td style="text-align: left;">A Json Object holding data about a single movie, containing the title, genre's, director, the image url, and the description:
+                        <pre>
+                        <code>
+            {
+                "Title": "Interstellar",
+                "Genre": {
+                    "Name": "Drama",
+                    "Description": "Is a genre in which the composition and...", 
+                },
+                "Director": {
+                    "Name": "Chrisopher Nolan",
+                    "Birth": 1970,
+                    "Bio": "Best known for his cerebral, often nonlinear... ",
+                },
+                "ImageURL": "",
+                "Description": "When Earth becomes uninhabitable in the future... ",
+                "Featured": true
+            }
+                        </code>
+                        </pre>  
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Get each Genre's data by Name</td>
+                    <td>/movies/genre/:genreName</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td style="text-align: left;">
+                        A JSON object holding data about a specific genre:
+                        <pre>
+                        <code>
+            {
+                "Name": "Drama",
+                "Description": "Is a genre in which the composition and build..." 
+            }
+                        </code>
+                        </pre>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Get each Director's data by Name</td>
+                    <td>/movies/director/:directorName</td>
+                    <td>GET</td>
+                    <td>None</td>
+                    <td style="text-align: left;">
+                        A JSON object holding data about a specific director:
+                        <pre>
+                        <code>
+            {
+                "Name": "Chrisopher Nolan",
+                "Birth": 1970,
+                "Bio": "Best known for his cerebral, often nonlinear, storytelling..."
+            }
+                        </code>
+                        </pre>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Allow New Users to Register</td>
+                    <td>/users</td>
+                    <td>POST</td>
+                    <td style="text-align: left;">
+                        A JSON object holding data about the user to add, structured like:
+                        <pre>
+                        <code>
+            {
+                "name": "Mary",
+                "favoriteMovies":[]
+            }
+                        </code>   
+                        </pre>
+                    </td>
+                    <td style="text-align: left;">
+                        A JSON object holding data about a registered user, including an ID:
+                        <pre>
+                        <code>
+            {
+                "name": "Mary",
+                "favoriteMovies": [],
+                "id": "70b7b3bf-4b29-451b-91d5-581d99072bda"
+            }
+                        </code>
+                        </pre>
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>Allow users to update thier name</td>
+                    <td>/users/:username</td>
+                    <td>PUT</td>
+                    <td style="text-align: left;">A JSON object holding data about the soon to be updated user's information structured like :
+                        <pre>
+                        <code>
+            {
+                "name": "Kim Updated Name",
+                "favoriteMovies": [],
+            }
+                        </code>
+                        </pre> 
+                    </td>
+                    <td style="text-align: left;">A JSON object holding data about the UPDATED information
+                        <pre>
+                        <code>
+            {
+                "id": 1,
+                "name": "Kim Updated Name",
+                "favoriteMovies": []
+            }
+                        </code>
+                        </pre>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </body>
 
 </html>

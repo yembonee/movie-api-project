@@ -1,1 +1,2 @@
-::1 - - [15/Oct/2023:20:45:52 +0000] "GET /public/documentation.html HTTP/1.1" 304 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 OPR/102.0.0.0"
+::1 - - [16/Oct/2023:21:36:52 +0000] "GET /public/documentation.html HTTP/1.1" 200 5680 "-" "PostmanRuntime/7.33.0"
+::1 - - [16/Oct/2023:21:45:00 +0000] "GET /movies/genre/Drama HTTP/1.1" 200 249 "-" "PostmanRuntime/7.33.0"
