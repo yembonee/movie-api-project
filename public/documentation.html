@@ -171,7 +171,36 @@
                 </tr>
 
                 <tr>
-                    <td></td>
+                    <td>Adding a User's Favorite Movie</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>POST</td>
+                    <td style="text-align: left;"> A JSON object holding data for which user to add the movie to
+                        <pre>
+                        <code>
+            {
+                "name": "Kim",
+                "favoriteMovies": [],
+            }
+                        </code>
+                        </pre> 
+                    </td>
+                    <td>Text that indicates whether the movie has been added or not</td>
+                </tr>
+
+                <tr>
+                    <td>Removing a User's chosen movie</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>Text that indicates whether the movie was removed or not</td>
+                </tr>
+
+                <tr>
+                    <td>Allows User to Deregister</td>
+                    <td>/users/:id</td>
+                    <td>DELETE</td>
+                    <td>None</td>
+                    <td>Text that indicates whether the user was removed or not</td>
                 </tr>
 
             </tbody>
