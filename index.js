@@ -13,15 +13,38 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {f
 
 let users = [
     {
-        id: 1,
-        name: "Kim",
-        favoriteMovies: []
+        "id": 1,
+        "Username": "austin321",
+        "Password": "password123",
+        "Email": "austint2002@gmail.com",
+        "Birthday": "2002-07-27",
+        "favoriteMovies": ["Rango"]
     },
     {
-        id: 2,
-        name: "Joe",
-        favoriteMovies: ["Interstellar"]
-    }
+        "id": 2,
+        "Username": "andrew.27",
+        "Password": "testing321",
+        "Email": "andrewjrhogue123@gmail.com",
+        "Birthday": "2003-09-27",
+        "favoriteMovies": ["Interstellar"]
+    },
+    {
+        "id": 3,
+        "Username": "yemson101",
+        "Password": "chickenburger321",
+        "Email": "yemidowu247@gmail.com",
+        "Birthday": "2001-07-24",
+        "favoriteMovies": ["Akira"]
+    },
+    {
+        "id": 4,
+        "Username": "marypoppins707",
+        "Password": "passcode321",
+        "Email": "sleepingdog@gmail.com",
+        "Birthday": "1992-02-13",
+        "favoriteMovies": ["A Silent Voice"]
+    },
+    
 ]
 
 let topMovies = [
@@ -43,8 +66,8 @@ let topMovies = [
     {
         "Title":'Rango',
         "Genre": {
-            "Name": "Western Comedy",
-            "Description": "Is a sub-form genre in which the style of movie is shot and setup as a classic western movie, with some comedic elements to give the movie more relief and less seriousness."
+            "Name": "Western",
+            "Description": "Is a genre in which it ecapsulates the early ages of american culture based during the western times, typically containing cowboys and native americans."
         },
         "Director": {
             "Name": "Gore Verbinksi",
@@ -109,7 +132,7 @@ let topMovies = [
         "Director": {
             "Name": "Sam Mendes",
             "Birth": 1965.0,
-            "Bio": "Samuel Alexander Mendes was born on August 1, 1965 in Reading, England, UK to parents James Peter Mendes, a retired university lecturer, and Valerie Helene Mendes, an author who writes children's books. "
+            "Bio": "Samuel Alexander Mendes was born on August 1, 1965 in Reading, England, UK to parents James Peter Mendes, a retired university lecturer, and Valerie Helene Mendes, an author who writes children's books."
         },
         "ImageURL": "https://m.media-amazon.com/images/I/61yYNBjFRjL._AC_UF894,1000_QL80_.jpg",
         "Description": 'April 6th, 1917. As an infantry battalion assembles to wage war deep in enemy territory, two soldiers are assigned to race against time and deliver a message that will stop 1,600 men from walking straight into a deadly trap.',
@@ -186,7 +209,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.post('/users', (req, res) => {
     const newUser = req.body;
 
-    if (newUser.name) {
+    if (newUser.Username) {
         newUser.id = uuid.v4();
         users.push(newUser);
         res.status(201).json(newUser);
@@ -260,7 +283,7 @@ app.put('/users/:id', (req, res) => {
     let user = users.find( user => user.id == id );
 
     if (user) {
-        user.name = updatedUser.name;
+        user.Username = updatedUser.Username;
         res.status(200).json(user);
     } else {
         res.status(400).send('no such user');
