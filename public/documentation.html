@@ -112,7 +112,6 @@
                     </td>
                 </tr>
 
-
                 <tr>
                     <td>Allow New Users to Register</td>
                     <td>/users</td>
@@ -125,8 +124,7 @@
                 "Username": "bobthebuilder24",
                 "Password": "password123",
                 "Email": "bobobob@gmail.com",
-                "Birthday": "2002-07-27",
-                "favoriteMovies": ["Prisoners"]
+                "Birthday": "07/27/02",
             }
                         </code>   
                         </pre>
@@ -136,14 +134,13 @@
                         <pre>
                         <code>
             {
+                "_id": "65303bd2eb3745ca2394c9a7",
                 "Username": "bobthebuilder24",
                 "Password": "password123",
                 "Email": "bobobob@gmail.com",
-                "Birthday": "2002-07-27",
-                "favoriteMovies": [
-                    "Prisoners"
-                ],
-                "id": "3b6ad752-bc60-42dd-b159-2d01cd92294e"
+                "Birthday": "2002-07-27T07:00:00.000Z",
+                "favoriteMovies": [],
+                "__v": 0
             }
                         </code>
                         </pre>
@@ -152,14 +149,17 @@
 
 
                 <tr>
-                    <td>Allow users to update thier name</td>
-                    <td>/users/:id</td>
+                    <td>Allow users to update thier Info</td>
+                    <td>/users/:Username</td>
                     <td>PUT</td>
                     <td style="text-align: left;">A JSON object holding data about the soon to be updated user's information structured like :
                         <pre>
                         <code>
             {
-                "Username": "danthedancer24"
+                "Username": "danthedancer24",
+                "Password": "password321",
+                "Email": "dantheman24@gmail.com",
+                "Birthday": "02/13/1992"
             }
                         </code>
                         </pre> 
@@ -168,14 +168,13 @@
                         <pre>
                         <code>
             {
+                "_id": "65303bd2eb3745ca2394c9a7",
                 "Username": "danthedancer24",
-                "Password": "password123",
-                "Email": "bobobob@gmail.com",
-                "Birthday": "2002-07-27",
-                "favoriteMovies": [
-                    "Prisoners"
-                ],
-                "id": "68c46a86-1098-4cc7-8832-39143f141c12"
+                "Password": "password321",
+                "Email": "dantheman24@gmail.com",
+                "Birthday": "1992-02-13T00:00:00.000Z",
+                "favoriteMovies": [],
+                "__v": 0
             }
                         </code>
                         </pre>
@@ -184,31 +183,51 @@
 
                 <tr>
                     <td>Adding a User's Favorite Movie</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>/users/:Username/movies/:MovieID</td>
                     <td>POST</td>
-                    <td style="text-align: left;"> A JSON object holding data for which user to add the movie to
+                    <td>None</td>
+                    <td style="text-align: left;">A JSON object holding data about the UPDATED information
                         <pre>
                         <code>
             {
-                "Username": "danthedancer24"
+                "_id": "65303bd2eb3745ca2394c9a7",
+                "Username": "danthedancer24",
+                "Password": "password321",
+                "Email": "dantheman24@gmail.com",
+                "Birthday": "1992-02-13T00:00:00.000Z",
+                "favoriteMovies": ["65302d86eb3745ca2394c99d"],
+                "__v": 0
             }
                         </code>
-                        </pre> 
+                        </pre>
                     </td>
-                    <td>Text that indicates whether the movie has been added or not</td>
                 </tr>
 
                 <tr>
                     <td>Removing a User's chosen movie</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>/users/:Username/movies/:MovieID</td>
                     <td>DELETE</td>
                     <td>None</td>
-                    <td>Text that indicates whether the movie was removed or not</td>
+                    <td style="text-align: left;">A JSON object holding data about the UPDATED information
+                        <pre>
+                        <code>
+            {
+                "_id": "65303bd2eb3745ca2394c9a7",
+                "Username": "danthedancer24",
+                "Password": "password321",
+                "Email": "dantheman24@gmail.com",
+                "Birthday": "1992-02-13T00:00:00.000Z",
+                "favoriteMovies": [],
+                "__v": 0
+            }
+                        </code>
+                        </pre>
+                    </td>
                 </tr>
 
                 <tr>
                     <td>Allows User to Deregister</td>
-                    <td>/users/:id</td>
+                    <td>/users/:Username</td>
                     <td>DELETE</td>
                     <td>None</td>
                     <td>Text that indicates whether the user was removed or not</td>
