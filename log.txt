@@ -344,3 +344,8 @@
 ::1 - - [21/Oct/2023:19:08:43 +0000] "GET /users HTTP/1.1" 201 224 "-" "PostmanRuntime/7.33.0"
 ::1 - - [21/Oct/2023:19:23:12 +0000] "GET / HTTP/1.1" 200 25 "-" "PostmanRuntime/7.33.0"
 127.0.0.1 - - [21/Oct/2023:19:25:29 +0000] "GET / HTTP/1.1" 200 25 "-" "PostmanRuntime/7.33.0"
+127.0.0.1 - - [21/Oct/2023:23:21:05 +0000] "PUT /users/testuser HTTP/1.1" 401 - "-" "PostmanRuntime/7.34.0"
+127.0.0.1 - - [21/Oct/2023:23:21:40 +0000] "PUT /users/testuser HTTP/1.1" 401 - "-" "PostmanRuntime/7.34.0"
+127.0.0.1 - - [21/Oct/2023:23:21:45 +0000] "PUT /users/testuser HTTP/1.1" 401 - "-" "PostmanRuntime/7.34.0"
+127.0.0.1 - - [21/Oct/2023:23:21:56 +0000] "PUT /users/testuser HTTP/1.1" 401 - "-" "PostmanRuntime/7.34.0"
+127.0.0.1 - - [21/Oct/2023:23:26:23 +0000] "PUT /users/testuser HTTP/1.1" 401 - "-" "PostmanRuntime/7.34.0"

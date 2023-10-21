@@ -1,13 +1,16 @@
-const express = require('express'),
- morgan = require('morgan'),
- fs = require('fs'),
- path = require('path'),
- bodyParser = require('body-parser'),
- uuid = require('uuid'),
- { check, validationResult } = require('express-validator');
+const express = require('express');
+const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
+const uuid = require('uuid');
+const { check, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
+
+//mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI || 'mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
-const mongoose = require('mongoose');
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
@@ -37,8 +40,7 @@ require('./passport.js');
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'});
 
-//mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect(process.env.CONNECTION_URI || 'mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 let users = [
     {
@@ -355,7 +357,7 @@ app.get('/users', passport.authenticate('jwt', { session: false }), async (req, 
 });
 
 //GETS USER BY SPECIFIED USERNAME
-app.get('/users/:Username', async (req, res) => {
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }) ,async (req, res) => {
     await Users.findOne({ Username: req.params.Username })
       .then((user) => {
         res.json(user);
