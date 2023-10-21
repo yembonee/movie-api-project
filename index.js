@@ -38,7 +38,7 @@ require('./passport.js');
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'});
 
 //mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('process.env.CONNECTION_URI', { useNewUrlParser: true, useUnifiedTopology: true });
 
 let users = [
     {
@@ -343,7 +343,7 @@ app.get('/movies/director/:directorName', passport.authenticate('jwt', { session
 });
 
 //GETS ALL OF THE USERS
-app.get('/users', async (req, res) => {
+app.get('/users', passport.authenticate('jwt', { session: false }), async (req, res) => {
     await Users.find()
       .then((users) => {
         res.status(201).json(users);
@@ -375,7 +375,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
-    ] ,async (req, res) => {
+    ] , (req, res) => {
         let errors = validationResult(req);
 
         if (!errors.isEmpty()) {
@@ -386,7 +386,7 @@ app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
         if(req.user.Username !== req.params.Username){
             return res.status(400).send('Permission Denied');
         }
-        await Users.findOneAndUpdate({ Username: req.params.Username }, { $set: 
+        Users.findOneAndUpdate({ Username: req.params.Username }, { $set: 
             {
                 Username: req.body.Username,
                 Password: hashedPassword,
