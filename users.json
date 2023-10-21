@@ -1,0 +1,1 @@
+{"_id":{"$oid":"6534214edcad2b294a412481"},"Username":"bob123","Password":"$2b$10$4lF5DVka4H.udY4Ptp.UWOXWDXzzYoDqXl/21gyjgbdSpQ36Vu7w6","Email":"myemail@gmail.com","Birthday":{"$date":"2001-01-01T08:00:00Z"},"FavoriteMovies":[],"__v":0}
