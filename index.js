@@ -26,7 +26,8 @@ const cors = require("cors");
 
 let allowedOrigins = ["http://localhost:1234", "*"];
 
-app.use(
+app.use(cors());
+/* app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
@@ -39,7 +40,7 @@ app.use(
       return callback(null, true);
     },
   })
-);
+); */
 
 let auth = require("./auth.js")(app);
 const passport = require("passport");
