@@ -24,7 +24,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require("cors");
 
-let allowedOrigins = ["http://localhost:1234", "*"];
+let allowedOrigins = [
+  "http://localhost:1234",
+  "http://localhost:7070",
+  "https://loquacious-gaufre-5f35f2.netlify.app/login",
+];
 
 //app.use(cors());
 app.use(
