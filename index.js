@@ -29,6 +29,7 @@ let allowedOrigins = [
   "http://localhost:7070",
   "http://localhost:4200",
   "https://loquacious-gaufre-5f35f2.netlify.app",
+  "https://rendermovieapi.onrender.com",
 ];
 
 //app.use(cors());
