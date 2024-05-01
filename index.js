@@ -33,6 +33,7 @@ let allowedOrigins = [
   "https://meek-alfajores-f2f0db.netlify.app",
   "https://65dcf1ce9879f7263035522a--meek-alfajores-f2f0db.netlify.app",
   "https://my-career-foundry-exercise-bucket-site-us-west-2.s3.us-west-2.amazonaws.com",
+  "http://35.94.33.77",
 ];
 
 //app.use(cors());
