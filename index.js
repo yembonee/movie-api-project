@@ -1,17 +1,32 @@
 const express = require("express");
 const morgan = require("morgan");
 const fs = require("fs");
+const fileupload = require("express-fileupload");
 const path = require("path");
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
+const { S3 } = require("@aws-sdk/client-s3");
 
 //mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+const s3Client = new S3Client({
+  region: "us-west-2",
+  endpoint: "http://localhost:4566",
+});
+
+const listObjectsParams = {
+  Bucket: "mycflocalbucket",
+};
+
+listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
+
+s3Client.send(listObjectsCmd);
 
 const app = express();
 const Models = require("./models.js");
@@ -763,6 +778,15 @@ app.delete(
 
 app.get("/", (req, res) => {
   res.send("Welcome to my Movie Site!");
+});
+
+app.post("/images", (req, res) => {
+  const file = req.files.image;
+  const fileName = req.files.image.name;
+  const tempPath = `${UPLAOD_TEMP_PATH}/${fileName}`;
+  file.mv(tempPath, (err) => {
+    res.status(500);
+  });
 });
 
 app.use((err, req, res, next) => {
