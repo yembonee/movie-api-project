@@ -7,7 +7,11 @@ const bodyParser = require("body-parser");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
-const { S3 } = require("@aws-sdk/client-s3");
+const {
+  S3Client,
+  ListObjectsV2Command,
+  PutObjectCommand,
+} = require("@aws-sdk/client-s3");
 
 //mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
