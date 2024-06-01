@@ -372,3 +372,8 @@
 127.0.0.1 - - [28/Apr/2024:19:39:25 +0000] "GET /movies HTTP/1.1" 401 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 OPR/107.0.0.0"
 127.0.0.1 - - [28/Apr/2024:19:39:35 +0000] "GET /login HTTP/1.1" 404 144 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 OPR/107.0.0.0"
 127.0.0.1 - - [28/Apr/2024:19:39:42 +0000] "GET /register HTTP/1.1" 404 147 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 OPR/107.0.0.0"
+127.0.0.1 - - [01/Jun/2024:19:12:57 +0000] "GET / HTTP/1.1" 200 25 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0"
+127.0.0.1 - - [01/Jun/2024:19:12:57 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:7070/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0"
+127.0.0.1 - - [01/Jun/2024:19:16:28 +0000] "GET /upload HTTP/1.1" 404 145 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0"
+127.0.0.1 - - [01/Jun/2024:19:16:36 +0000] "GET /movies HTTP/1.1" 401 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0"
+127.0.0.1 - - [01/Jun/2024:19:16:41 +0000] "GET /upload HTTP/1.1" 404 145 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36 OPR/109.0.0.0"
