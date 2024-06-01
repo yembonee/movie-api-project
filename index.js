@@ -7,6 +7,7 @@ const bodyParser = require("body-parser");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
+const AWS = require("aws-sdk");
 const {
   S3Client,
   ListObjectsV2Command,
@@ -19,6 +20,11 @@ mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
   useUnifiedTopology: true,
 });
 
+AWS.config.update({ region: "us-west-2" });
+
+const s3 = new AWS.S3();
+
+/*
 const s3Client = new S3Client({
   region: "us-west-2",
   endpoint: "http://localhost:4566",
@@ -31,6 +37,7 @@ const listObjectsParams = {
 listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
 
 s3Client.send(listObjectsCmd);
+*/
 
 const app = express();
 const Models = require("./models.js");
@@ -784,12 +791,51 @@ app.get("/", (req, res) => {
   res.send("Welcome to my Movie Site!");
 });
 
-app.post("/images", (req, res) => {
-  const file = req.files.image;
-  const fileName = req.files.image.name;
-  const tempPath = `${UPLAOD_TEMP_PATH}/${fileName}`;
-  file.mv(tempPath, (err) => {
-    res.status(500);
+app.post("/upload", (req, res) => {
+  const params = {
+    Bucket: "mycflocalbucket",
+    Key: req.body.fileName,
+    Body: fs.createReadStream(req.files.path),
+  };
+
+  s3.upload(params, (err, data) => {
+    if (err) {
+      console.error("Error uploading object:", err);
+      return res.status(500).send("Error uploading object to S3");
+    }
+    console.log("Object uploaded successfully. Etag:", data.ETag);
+    res.send("Object uploaded successfully to S3");
+  });
+});
+
+app.get("/list", (req, res) => {
+  const params = {
+    Bucket: "mycflocalbucket",
+  };
+
+  s3.listObjects(params, (err, data) => {
+    if (err) {
+      console.error("Error listing Objecs:", err);
+      return res.status(500).send("Error listing objects in S3 bucket");
+    }
+    console.log("Objects in the bucket:", data.Contents);
+    res.json(data.Contents);
+  });
+});
+
+app.get("/retrieve/:key", (req, res) => {
+  const params = {
+    Bucket: "mycflocalbucket",
+    Key: req.params.key,
+  };
+
+  s3.getObject(params, (err, data) => {
+    if (err) {
+      console.error("Error retrieving object:", err);
+      return res.status(400).send("Object not found in S3 bucket");
+    }
+    console.log("Object retrieved successfully");
+    res.send(data.Body);
   });
 });
 
