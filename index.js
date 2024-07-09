@@ -7,37 +7,21 @@ const bodyParser = require("body-parser");
 const uuid = require("uuid");
 const { check, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
+const { pipeline } = require("stream");
+const { promisify } = require("util");
 const AWS = require("aws-sdk");
-const {
-  S3Client,
-  ListObjectsV2Command,
-  PutObjectCommand,
-} = require("@aws-sdk/client-s3");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 //mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
+/*mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-AWS.config.update({ region: "us-west-2" });
+*/
 
 const s3 = new AWS.S3();
-
-/*
-const s3Client = new S3Client({
-  region: "us-west-2",
-  endpoint: "http://localhost:4566",
-});
-
-const listObjectsParams = {
-  Bucket: "mycflocalbucket",
-};
-
-listObjectsCmd = new ListObjectsV2Command(listObjectsParams);
-
-s3Client.send(listObjectsCmd);
-*/
+const bucketName = "my-static-bucket-2-6";
 
 const app = express();
 const Models = require("./models.js");
@@ -80,6 +64,7 @@ app.use(
 
 let auth = require("./auth.js")(app);
 const passport = require("passport");
+const { S3 } = require("aws-sdk");
 require("./passport.js");
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
@@ -791,9 +776,10 @@ app.get("/", (req, res) => {
   res.send("Welcome to my Movie Site!");
 });
 
+/*
 app.post("/upload", (req, res) => {
   const params = {
-    Bucket: "mycflocalbucket",
+    Bucket: "my-static-bucket-2-6",
     Key: req.body.fileName,
     Body: fs.createReadStream(req.files.path),
   };
@@ -810,7 +796,7 @@ app.post("/upload", (req, res) => {
 
 app.get("/list", (req, res) => {
   const params = {
-    Bucket: "mycflocalbucket",
+    Bucket: "my-static-bucket-2-6",
   };
 
   s3.listObjects(params, (err, data) => {
@@ -825,7 +811,7 @@ app.get("/list", (req, res) => {
 
 app.get("/retrieve/:key", (req, res) => {
   const params = {
-    Bucket: "mycflocalbucket",
+    Bucket: "my-static-bucket-2-6",
     Key: req.params.key,
   };
 
@@ -836,6 +822,62 @@ app.get("/retrieve/:key", (req, res) => {
     }
     console.log("Object retrieved successfully");
     res.send(data.Body);
+  });
+});
+*/
+
+app.get(
+  ("/retrieve/:key",
+  (req, res) => {
+    const key = req.params.key;
+
+    const params = {
+      Bucket: bucketName,
+      Key: key,
+    };
+
+    s3.getObject(params, (err, data) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.send(data.Body);
+    });
+  })
+);
+
+app.get(
+  ("/list",
+  (req, res) => {
+    const params = {
+      Bucket: bucketName,
+    };
+
+    s3.listObjectsV2(params, (err, data) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+      res.send(data.Contents);
+    });
+  })
+);
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  const file = req.file;
+
+  const fileContent = fs.readFileSync(file.path);
+
+  const params = {
+    Bucket: bucketName,
+    Key: file.originalname,
+    Body: fileContent,
+  };
+
+  s3.upload(params, (err, data) => {
+    fs.unlinkSync(file.path);
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send(`File uploaded successfully. ${data.Location}`);
   });
 });
 
