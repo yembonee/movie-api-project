@@ -21,7 +21,7 @@ const upload = multer({ dest: "uploads/" });
 */
 
 const s3 = new AWS.S3();
-const bucketName = "my-static-bucket-2-6";
+const bucketName = "my-image-bucket-2-6";
 
 const app = express();
 const Models = require("./models.js");
@@ -826,40 +826,34 @@ app.get("/retrieve/:key", (req, res) => {
 });
 */
 
-app.get(
-  ("/retrieve/:key",
-  (req, res) => {
-    const key = req.params.key;
+app.get("/retrieve/:key", (req, res) => {
+  const key = req.params.key;
 
-    const params = {
-      Bucket: bucketName,
-      Key: key,
-    };
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+  };
 
-    s3.getObject(params, (err, data) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      res.send(data.Body);
-    });
-  })
-);
+  s3.getObject(params, (err, data) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send(data.Body);
+  });
+});
 
-app.get(
-  ("/list",
-  (req, res) => {
-    const params = {
-      Bucket: bucketName,
-    };
+app.get("/list", (req, res) => {
+  const params = {
+    Bucket: bucketName,
+  };
 
-    s3.listObjectsV2(params, (err, data) => {
-      if (err) {
-        return res.status(500).send(err);
-      }
-      res.send(data.Contents);
-    });
-  })
-);
+  s3.listObjectsV2(params, (err, data) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+    res.send(data.Contents);
+  });
+});
 
 app.post("/upload", upload.single("file"), (req, res) => {
   const file = req.file;
