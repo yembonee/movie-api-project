@@ -9,9 +9,10 @@ const { check, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const { pipeline } = require("stream");
 const { promisify } = require("util");
-const AWS = require("aws-sdk");
+/*const AWS = require("aws-sdk");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+*/
 
 //mongoose.connect('mongodb://localhost:27017/cfDB', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
@@ -19,8 +20,10 @@ mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017", {
   useUnifiedTopology: true,
 });
 
+/*
 const s3 = new AWS.S3();
 const bucketName = "my-image-bucket-2-6";
+*/
 
 const app = express();
 const Models = require("./models.js");
@@ -775,6 +778,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to my Movie Site!");
 });
 
+/*
+
 // THIS IS THE START OF MY AWS IMPLEMENTAION
 
 app.get("/retrieve/:key", (req, res) => {
@@ -825,6 +830,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
     res.send(`File uploaded successfully. ${data.Location}`);
   });
 });
+*/
 
 // THIS IS THE END OF MY AWS IMPLEMENTAION
 
