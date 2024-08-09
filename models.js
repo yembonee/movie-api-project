@@ -12,9 +12,13 @@ let movieSchema = mongoose.Schema({
     Name: String,
     Bio: String,
   },
-  Actors: [String],
-  ImagePath: String,
-  Featured: Boolean,
+  ImageURL: String,
+  Ratings: [
+    {
+      User: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+      Rating: { type: Number, min: 0, max: 5 },
+    },
+  ],
 });
 
 let userSchema = mongoose.Schema({
