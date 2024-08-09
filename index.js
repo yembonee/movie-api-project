@@ -40,7 +40,7 @@ let allowedOrigins = [
   "http://localhost:1234",
   "http://localhost:7070",
   "http://localhost:4200",
-  "https://loquacious-gaufre-5f35f2.netlify.app",
+  "https://myflixforus.netlify.app",
   "https://rendermovieapi.onrender.com",
   "https://meek-alfajores-f2f0db.netlify.app",
   "https://65dcf1ce9879f7263035522a--meek-alfajores-f2f0db.netlify.app",
