@@ -407,68 +407,6 @@ app.post(
   }
 );
 
-/**
- * @description Adding a Rating to a movie
- * @name POST /movies/:MovieID/rate
- * @example
- * Authentication: Bearer Token (jwt)
- * @example
- * Request Data Format
- * {
- *  "Rating": 5
- * }
- * @example
- * Response data Format
- * {
- *  "Movie": {
- *    "Ratings": [
- *      {
- *        "User": ObjectId,
- *        "Rating": 5
- *     }
- *   ]
- *  }
- * }
- */
-
-app.post(
-  "/movies/:MovieID/rate",
-  passport.authenticate("jwt", { session: false }),
-  async (req, res) => {
-    const { Rating } = req.body;
-    const userId = req.user._id;
-
-    if (!Rating || Rating < 0 || Rating > 5) {
-      return res
-        .status(400)
-        .send("Invalid Rating. Rating must be between 0 and 5.");
-    }
-
-    try {
-      const movie = await Movies.findById(req.params.MovieID);
-      if (!movie) {
-        return res.status(404).send("Moive not Found!");
-      }
-
-      const existingRating = movie.Ratings.find(
-        (rating) => rating.User.toString() === userId.toString()
-      );
-
-      if (existingRating) {
-        existingRating.Rating = Rating;
-      } else {
-        movie.Ratings.push({ User: userId, Rating });
-      }
-
-      await movie.save();
-      return res.status(200).json(movie);
-    } catch {
-      console.error(err);
-      return res.status(500).send("Error: " + err);
-    }
-  }
-);
-
 // READ
 
 /**
@@ -752,36 +690,6 @@ app.put(
       });
   }
 );
-
-/**
- * @description Get the average rating of a movie
- * @name GET /movies/:MovieID/average-rating
- * @example
- * Authentication: none
- * @example
- * Response data format
- * {
- *  "AverageRating": 4.5
- * }
- */
-
-app.get("/movies/:MovieID/average-rating", async (req, res) => {
-  try {
-    const movie = await Movies.findById(req.params.MovieID);
-
-    if (!movie) {
-      return res.status(404).send("Movie not Found.");
-    }
-
-    const ratings = movie.Ratings.map((rating) => rating.Rating);
-    const averageRating =
-      ratings.reduce((acc, cur) => acc + cur, 0) / ratings.length || 0;
-    return res.status(200).json({ AverageRating: averageRating });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).send("Error: " + err);
-  }
-});
 
 //DELETE
 
