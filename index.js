@@ -684,7 +684,7 @@ app.get(
 );
 
 app.get(
-  "movies/:MovieID/rating",
+  "/movies/:MovieID/rating",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const movieId = req.params.MovieID;
