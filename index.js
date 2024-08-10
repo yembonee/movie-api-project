@@ -407,6 +407,69 @@ app.post(
   }
 );
 
+app.post(
+  "/movies/:MovieID/rate",
+  passport.authenticate("jwt", { session: false }),
+  [
+    check("rating", "Rating is required and must be a number between 1 and 5")
+      .isInt({ min: 1, max: 5 })
+      .not()
+      .isEmpty(),
+  ],
+  (req, res) => {
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    const movieId = req.params.MovieID;
+    const { rating } = req.body;
+    const userId = req.user._id;
+
+    Movies.findById(movieId)
+      .then((movie) => {
+        if (!movie) {
+          return res.status(404).send("Movie not found.");
+        }
+
+        let existingRating = movie.Ratings.find(
+          (r) => r.UserId.toString() === userId.toString()
+        );
+
+        if (existingRating) {
+          existingRating.Value = rating;
+        } else {
+          movie.Ratings.push({ UserId: userId, Value: rating });
+        }
+
+        const totalRatings = movie.Ratings.length;
+        const averageRating =
+          movie.Ratings.reduce((acc, curr) => acc + curr.Value, 0) /
+          totalRatings;
+
+        movie.AverageRating = averageRating.toFixed(1);
+
+        movie
+          .save()
+          .then((updatedMovie) => {
+            res.status(200).json({
+              message: "Rating updated successfully",
+              movie: updatedMovie,
+            });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+          });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+
 // READ
 
 /**
