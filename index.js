@@ -683,6 +683,36 @@ app.get(
   }
 );
 
+app.get(
+  "movies/:MovieID/rating",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const movieId = req.params.MovieID;
+    const userId = req.user._id;
+
+    Movies.findById(movieId)
+      .then((movie) => {
+        if (!movie) {
+          return res.status(404).send("Movie not found.");
+        }
+
+        const userRating = movie.Ratings.find(
+          (r) => r.UserId.toString() === userId.toString()
+        );
+
+        if (userRating) {
+          res.status(200).json({ rating: userRating.Value });
+        } else {
+          res.status(200).json({ rating: null });
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+
 //UPDATE
 
 /**
